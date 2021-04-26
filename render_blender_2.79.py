@@ -153,8 +153,8 @@ bpy.ops.object.delete()
 # Import textured mesh
 bpy.ops.object.select_all(action='DESELECT')
 
-# bpy.ops.import_scene.obj(filepath=args.obj)
-bpy.ops.import_mesh.ply(filepath = args.obj)
+bpy.ops.import_scene.obj(filepath=args.obj)
+# bpy.ops.import_mesh.ply(filepath = args.obj)
 
 obj = bpy.context.selected_objects[0]
 context.view_layer.objects.active = obj
