@@ -56,8 +56,9 @@ class MyFile(object):
 
 
 class MyNormalize(object):
-    minP = Point(1000, 10000, 10000)
-    maxP = Point(0, 0, 0)
+    def __init__(self):
+        self.minP = Point(1000, 10000, 10000)
+        self.maxP = Point(0, 0, 0)
 
     def get_bounding_box(self, p):
         """
@@ -94,10 +95,17 @@ class MyNormalize(object):
         """
         new_points = []
         for point in points:
-            x = (point.x - self.minP.x) * 2 / box_len - 1
-            y = (point.y - self.minP.y) * 2 / box_len - 1
-            z = (point.z - self.minP.z) * 2 / box_len - 1
+            # x = (point.x - self.minP.x) * 2 / box_len - 1
+            # y = (point.y - self.minP.y) * 2 / box_len - 1
+            # z = (point.z - self.minP.z) * 2 / box_len - 1
+            x = (point.x - (self.minP.x + self.maxP.x)/2.0) / box_len - 1
+            y = (point.y - (self.minP.y + self.maxP.y)/2.0) / box_len - 1
+            z = (point.z - (self.minP.z + self.maxP.z)/2.0) / box_len - 1
+            # x = point.x 
+            # y = point.y
+            # z = point.z
             new_points.append(Point(x, y, z))
+        print(self.minP.x,self.maxP.x)
         return new_points
 
     def read_points(self, filename):
@@ -136,7 +144,7 @@ class MyNormalize(object):
             point_lines.append(point_line)
         with open(src_filename, "r") as file:
             print(src_filename)
-            outFile = open(des_filename, "a")
+            outFile = open(des_filename, "w")
             print(des_filename)
             for point in points:
                 point_line = "v " + str(point.x) + " " + str(point.y) + " " + str(point.z) + "\n"
@@ -158,7 +166,6 @@ class MyNormalize(object):
 
 if __name__ == "__main__":
     myFile = MyFile()
-    myNormalize = MyNormalize()
     basePath = "/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/center_obj"
 
     myFile.get_folder_paths(basePath)
@@ -169,6 +176,8 @@ if __name__ == "__main__":
         print(outFolderPath)
         objFilenames = myFile.get_obj_filenames(folder)
         for objFilename in objFilenames:
+            print('new')
+            myNormalize = MyNormalize()
             # 读取obj文件的坐标点
             objFilePath = os.path.join(folder, objFilename)
             points = myNormalize.read_points(objFilePath)
