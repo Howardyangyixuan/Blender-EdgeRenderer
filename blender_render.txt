@@ -1,0 +1,1 @@
+blender --background --python render_blender.py -- --views 1 --output_folder render_result center_obj/1/1.obj 
