@@ -159,7 +159,7 @@ class MyNormalize(object):
 if __name__ == "__main__":
     myFile = MyFile()
     myNormalize = MyNormalize()
-    basePath = "/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/obj_test"
+    basePath = "/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/center_obj"
 
     myFile.get_folder_paths(basePath)
     myFile.get_out_folders()
