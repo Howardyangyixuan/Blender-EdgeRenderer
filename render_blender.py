@@ -153,6 +153,7 @@ bpy.ops.object.delete()
 bpy.ops.object.select_all(action='DESELECT')
 
 bpy.ops.import_scene.obj(filepath=args.obj)
+# bpy.ops.import_mesh.ply(filepath = args.obj)
 
 obj = bpy.context.selected_objects[0]
 context.view_layer.objects.active = obj
@@ -196,7 +197,7 @@ bpy.data.objects['Sun'].rotation_euler[0] += 180
 
 # Place camera
 cam = scene.objects['Camera']
-cam.location = (0, 1, 0.6)
+cam.location = (0, 2, 2)
 cam.data.lens = 35
 cam.data.sensor_width = 32
 
@@ -215,18 +216,24 @@ cam_constraint.target = cam_empty
 stepsize = 360.0 / args.views
 rotation_mode = 'XYZ'
 
-model_identifier = os.path.split(os.path.split(args.obj)[0])[1]
-fp = os.path.join(os.path.abspath(args.output_folder), model_identifier, model_identifier)
+# model_identifier = os.path.split(os.path.split(args.obj)[0])[1]
+model_identifier = args.obj.split('/')[-1].split('.')[0]
+current = './'
+print("model:",model_identifier)
+print("model:",args.obj)
+# fp = os.path.join(os.path.abspath(args.output_folder), model_identifier, model_identifier)
+fp = os.path.join(os.path.abspath(args.output_folder), current, model_identifier)
 
 for i in range(0, args.views):
     print("Rotation {}, {}".format((stepsize * i), math.radians(stepsize * i)))
 
     render_file_path = fp + '_r_{0:03d}'.format(int(i * stepsize))
+    # render_file_path = fp + '_r_{0:03d}'.format(int(i * stepsize))
 
     scene.render.filepath = render_file_path
-    depth_file_output.file_slots[0].path = render_file_path + "_depth"
-    normal_file_output.file_slots[0].path = render_file_path + "_normal"
-    albedo_file_output.file_slots[0].path = render_file_path + "_albedo"
+    # depth_file_output.file_slots[0].path = render_file_path + "_depth"
+    # normal_file_output.file_slots[0].path = render_file_path + "_normal"
+    # albedo_file_output.file_slots[0].path = render_file_path + "_albedo"
     id_file_output.file_slots[0].path = render_file_path + "_id"
 
     bpy.ops.render.render(write_still=True)  # render still

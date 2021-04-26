@@ -1,0 +1,3 @@
+snap info blender 
+sudo snap remove blender 
+sudo snap blender --channels=2.9/stable --classic
