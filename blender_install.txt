@@ -1,3 +1,4 @@
 snap info blender 
 sudo snap remove blender 
 sudo snap install blender --channel=2.9/stable --classic
+sudo snap install blender --channel=2.79/stable --classic
