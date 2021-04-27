@@ -98,9 +98,12 @@ class MyNormalize(object):
             # x = (point.x - self.minP.x) * 2 / box_len - 1
             # y = (point.y - self.minP.y) * 2 / box_len - 1
             # z = (point.z - self.minP.z) * 2 / box_len - 1
-            x = (point.x - (self.minP.x + self.maxP.x)/2.0) / box_len - 1
-            y = (point.y - (self.minP.y + self.maxP.y)/2.0) / box_len - 1
-            z = (point.z - (self.minP.z + self.maxP.z)/2.0) / box_len - 1
+            x = (point.x - (self.minP.x + self.maxP.x)/2.0) / box_len
+            y = (point.y - (self.minP.y + self.maxP.y)/2.0) / box_len 
+            z = (point.z - (self.minP.z + self.maxP.z)/2.0) / box_len
+            # x = (point.x - (self.minP.x + self.maxP.x)/2.0) 
+            # y = (point.y - (self.minP.y + self.maxP.y)/2.0) 
+            # z = (point.z - (self.minP.z + self.maxP.z)/2.0)
             # x = point.x 
             # y = point.y
             # z = point.z

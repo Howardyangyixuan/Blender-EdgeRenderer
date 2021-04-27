@@ -92,8 +92,8 @@ def setup_general(filename, im_size, cycles_samples, like_train_data):
 
 
 def setup_particle_prototypes(colors):
-    # col = 0.5
-    col = 0
+    col = 0.5
+    # col = 0
     color = (col, col, col)
     add_prototype(0, color)
     if colors is not None:

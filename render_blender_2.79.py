@@ -44,7 +44,8 @@ context = bpy.context
 scene = bpy.context.scene
 render = bpy.context.scene.render
 
-render.engine = args.engine
+# render.engine = args.engine
+render.engine = 'CYCLES'
 render.image_settings.color_mode = 'RGBA' # ('RGB', 'RGBA', ...)
 render.image_settings.color_depth = args.color_depth # ('8', '16')
 render.image_settings.file_format = args.format # ('PNG', 'OPEN_EXR', 'JPEG, ...)
@@ -52,6 +53,7 @@ render.resolution_x = args.resolution
 render.resolution_y = args.resolution
 render.resolution_percentage = 100
 render.film_transparent = True
+# render.film_transparent = False
 
 scene.use_nodes = True
 scene.view_layers["View Layer"].use_pass_normal = True
@@ -101,20 +103,38 @@ if args.edge_split:
 # Set objekt IDs
 obj.pass_index = 1
 
-# Make light just directional, disable shadows.
+#Yyx 
+def select_object(obj):
+    clear_selection()
+    bpy.context.selected_objects.clear()
+    bpy.context.scene.objects.active = obj
+    obj.select = True
+    return obj
+
+prototype = bpy.context.object
+bpy.ops.object.select_all(action='SELECT')
+mat = bpy.data.materials.new("my")
+bpy.ops.object.material_slot_add()
+prototype.material_slots[0].material = mat
+bpy.data.materials["my"].use_nodes = True
+bpy.data.worlds["World"].node_tree.nodes["Background"].inputs[0].default_value = (1, 1, 1, 1)
+bpy.data.materials["my"].node_tree.nodes["Principled BSDF"].inputs[0].default_value = (0.5, 0.5, 0.5, 1)
+bpy.data.materials["my"].node_tree.nodes["Principled BSDF"].inputs[19].default_value = 1
+
+# # Make light just directional, disable shadows.
 light = bpy.data.lights['Light']
 light.type = 'SUN'
 light.use_shadow = False
 # Possibly disable specular shading:
 light.specular_factor = 1.0
-light.energy = 10.0
+light.energy = 5.0
 
 # Add another light source so stuff facing away from light is not completely dark
 bpy.ops.object.light_add(type='SUN')
 light2 = bpy.data.lights['Sun']
 light2.use_shadow = False
-light2.specular_factor = 1.0
-light2.energy = 0.015
+light2.specular_factor = 3.0
+light2.energy = 1
 bpy.data.objects['Sun'].rotation_euler = bpy.data.objects['Light'].rotation_euler
 bpy.data.objects['Sun'].rotation_euler[0] += 180
 
@@ -123,6 +143,15 @@ cam = scene.objects['Camera']
 cam.location = (0, 2, 2)
 cam.data.lens = 35
 cam.data.sensor_width = 32
+
+im_size = 1024
+bpy.data.scenes["Scene"].render.resolution_x = im_size * (100 / bpy.context.scene.render.resolution_percentage)
+bpy.data.scenes["Scene"].render.resolution_y = im_size * (100 / bpy.context.scene.render.resolution_percentage)
+
+camObj = bpy.data.objects['Camera']
+camObj.data.lens = 60  # 60 mm focal length
+camObj.data.sensor_height = 32.0
+camObj.data.sensor_width = float(camObj.data.sensor_height) / im_size * im_size
 
 cam_constraint = cam.constraints.new(type='TRACK_TO')
 cam_constraint.track_axis = 'TRACK_NEGATIVE_Z'
