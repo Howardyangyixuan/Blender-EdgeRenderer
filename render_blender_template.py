@@ -2,8 +2,11 @@
 # Also produces depth map at the same time.
 #
 # Tested with Blender 2.9
-# Yyx modify to Blender 2.79
-#
+# Yyx modify 
+# 1. add CYCLES setting include gpu & cpu
+# 2. keep in 2.9, add material & background color (have to set transparency to false)
+# 3. add EEVEE setting include Ambient Occlusion
+# 4. roration and position for atlas result
 # Example:
 # blender --background --python mytest.py -- --views 10 /path/to/my.obj
 #
