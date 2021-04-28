@@ -44,14 +44,26 @@ context = bpy.context
 scene = bpy.context.scene
 render = bpy.context.scene.render
 
-# render.engine = args.engine
-render.engine = 'CYCLES'
+
+render.engine = args.engine
+# render.engine = 'CYCLES'
+# CYCLES settings
+bpy.context.scene.cycles.device = 'GPU'
+bpy.context.scene.cycles.samples = 128
+bpy.context.scene.cycles.use_denoising = True
+
+# EEVEE settings
+bpy.context.scene.eevee.use_gtao = True
+bpy.context.scene.eevee.gtao_factor = 5
+bpy.context.scene.eevee.gtao_distance = 1
+bpy.context.scene.eevee.gtao_quality = 0.25
+
 render.image_settings.color_mode = 'RGBA' # ('RGB', 'RGBA', ...)
 render.image_settings.color_depth = args.color_depth # ('8', '16')
 render.image_settings.file_format = args.format # ('PNG', 'OPEN_EXR', 'JPEG, ...)
-render.resolution_x = args.resolution
-render.resolution_y = args.resolution
 render.resolution_percentage = 100
+render.resolution_x = args.resolution * (100 / render.resolution_percentage)
+render.resolution_y = args.resolution * (100 / render.resolution_percentage)
 render.film_transparent = True
 # render.film_transparent = False
 
@@ -77,8 +89,8 @@ bpy.ops.object.delete()
 # Import textured mesh
 bpy.ops.object.select_all(action='DESELECT')
 
-bpy.ops.import_scene.obj(filepath=args.obj)
-# bpy.ops.import_mesh.ply(filepath = args.obj)
+# bpy.ops.import_scene.obj(filepath=args.obj)
+bpy.ops.import_mesh.ply(filepath = args.obj)
 
 obj = bpy.context.selected_objects[0]
 context.view_layer.objects.active = obj
@@ -111,8 +123,18 @@ def select_object(obj):
     obj.select = True
     return obj
 
+# select obj
 prototype = bpy.context.object
 bpy.ops.object.select_all(action='SELECT')
+# Atlas settings
+bpy.context.object.location[0] = 0.065471
+bpy.context.object.location[1] = -0.030256
+bpy.context.object.location[2] = 0.05539
+bpy.context.object.rotation_euler[0] = -7.72888
+bpy.context.object.rotation_euler[1] = 3.54133
+bpy.context.object.rotation_euler[2] = 4.36812
+
+# add material & world background color
 mat = bpy.data.materials.new("my")
 bpy.ops.object.material_slot_add()
 prototype.material_slots[0].material = mat
@@ -141,17 +163,10 @@ bpy.data.objects['Sun'].rotation_euler[0] += 180
 # Place camera
 cam = scene.objects['Camera']
 cam.location = (0, 2, 2)
-cam.data.lens = 35
+cam.data.lens = 35# 60 mm focal length
 cam.data.sensor_width = 32
-
-im_size = 1024
-bpy.data.scenes["Scene"].render.resolution_x = im_size * (100 / bpy.context.scene.render.resolution_percentage)
-bpy.data.scenes["Scene"].render.resolution_y = im_size * (100 / bpy.context.scene.render.resolution_percentage)
-
-camObj = bpy.data.objects['Camera']
-camObj.data.lens = 60  # 60 mm focal length
-camObj.data.sensor_height = 32.0
-camObj.data.sensor_width = float(camObj.data.sensor_height) / im_size * im_size
+cam.data.sensor_height = 32.0
+# cam.data.sensor_width = float(camObj.data.sensor_height) / im_size * im_size
 
 cam_constraint = cam.constraints.new(type='TRACK_TO')
 cam_constraint.track_axis = 'TRACK_NEGATIVE_Z'

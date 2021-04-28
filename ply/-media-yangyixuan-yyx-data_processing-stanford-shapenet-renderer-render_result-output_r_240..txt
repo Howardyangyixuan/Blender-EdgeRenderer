@@ -1,0 +1,1 @@
+/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/render_result/output_r_240.png

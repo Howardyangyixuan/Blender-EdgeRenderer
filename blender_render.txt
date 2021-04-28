@@ -1,2 +1,3 @@
 blender --background --python render_blender.py -- --views 1 --output_folder render_result center_obj/1/1.obj 
 blender --background -P render_point_cloud_blender.py -- --in_file=./npz/1.npz --out_file=./npz_result/1.png --vis_azimuth=-35 --vis_elevation=170 --vis_dist=3.0 --cycles_samples=100 --like_train_data --image_size=1024
+find . -name ply/*.ply -exec blender --background --python render_blender_2.79.py -- --output_folder render_result --views 1 --engine CYCLES {} \;
