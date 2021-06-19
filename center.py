@@ -47,12 +47,17 @@ class MyFile(object):
 
     def get_out_folders(self):
         for folder in self.folders:
-            new_folder = './center_result'
-            print('here')
-            self.outFolders.append(new_folder)
+            folder = folder.replace('/ABC/obj','/ABC/obj_center')
+            self.outFolders.append(folder)
+            # new_folder = './center_result'
+            # print('here')
+            # self.outFolders.append(new_folder)
             # print(new_folder)
-            if not os.path.exists(new_folder):
-                os.makedirs(new_folder)
+            print("hi",folder)
+            # if not os.path.exists(new_folder):
+            #     os.makedirs(new_folder)
+            if not os.path.exists(folder):
+                os.makedirs(folder)
 
 
 class MyNormalize(object):
@@ -121,7 +126,8 @@ class MyNormalize(object):
             points = []
             max = 10000
             i=0
-            while i<max:
+            # while i<max:
+            while True:
                 i+=1
                 line = file.readline()
                 if not line:
@@ -155,7 +161,8 @@ class MyNormalize(object):
                 outFile.flush()
             max = 10000
             i=0
-            while i<max:
+            while True:
+            # while i<max:
                 i+=1
                 line = file.readline()
                 if not line:
@@ -169,7 +176,8 @@ class MyNormalize(object):
 
 if __name__ == "__main__":
     myFile = MyFile()
-    basePath = "/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/center_obj"
+    # basePath = "/media/yangyixuan/yyx/data_processing/stanford-shapenet-renderer/center_obj"
+    basePath = "/media/yangyixuan/DATA/ABC/obj"
 
     myFile.get_folder_paths(basePath)
     myFile.get_out_folders()
