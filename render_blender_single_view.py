@@ -20,8 +20,6 @@ parser.add_argument('--views', type=int, default=30,
                     help='number of views to be rendered')
 parser.add_argument('obj', type=str,
                     help='Path to the obj file to be rendered.')
-parser.add_argument('edge', type=str,
-                    help='Path to the edge obj file to be rendered.')
 parser.add_argument('--output_folder', type=str, default='/tmp',
                     help='The path the output will be dumped to.')
 parser.add_argument('--scale', type=float, default=1,
@@ -95,7 +93,6 @@ bpy.ops.object.delete()
 bpy.ops.object.select_all(action='DESELECT')
 
 bpy.ops.import_scene.obj(filepath=args.obj)
-bpy.ops.import_scene.obj(edgepath=args.edge)
 # bpy.ops.import_mesh.ply(filepath = args.obj)
 
 obj = bpy.context.selected_objects[0]
