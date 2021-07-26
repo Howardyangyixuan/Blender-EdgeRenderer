@@ -13,6 +13,9 @@ with open(obj_list_path) as f:
         outfolders = out.readlines()
         cnt = 0
         for outfolder,infolder in zip(outfolders,infolders):
+            cnt+=1
+            if cnt<=10:
+                continue
             print(infolder)
             outfolder = outfolder.strip()
             inglob = infolder.strip()+'/*.obj'
@@ -22,10 +25,10 @@ with open(obj_list_path) as f:
             print(infile)
             print(edgefile)
             # cnt+=1
-            # if cnt>2:
+            # if cnt>10:
             #     break
             # command = 'blender --background --python render_blender_single_view.py -- --views 1 --output_folder '+ outfolder+" "+infile +' --resolution=1024'
-            command = 'blender --background --python render_blender_single_view_edge_together.py -- --views 1 --output_folder '+ outfolder+" --edge "+ edgefile+" "+infile +' --resolution=1024'
+            command = 'blender --background --python render_blender_single_view_edge_together.py -- --views 1 --output_folder '+ outfolder+" --edge "+ edgefile+" "+infile +' --resolution=256'
             print(command)
             os.system(command)
 

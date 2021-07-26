@@ -61,7 +61,7 @@ bpy.context.scene.eevee.gtao_factor = 5
 bpy.context.scene.eevee.gtao_distance = 1
 bpy.context.scene.eevee.gtao_quality = 0.25
 
-render.image_settings.color_mode = 'RGBA' # ('RGB', 'RGBA', ...)
+render.image_settings.color_mode = 'RGB' # ('RGB', 'RGBA', ...)
 render.image_settings.color_depth = args.color_depth # ('8', '16')
 render.image_settings.file_format = args.format # ('PNG', 'OPEN_EXR', 'JPEG, ...)
 render.resolution_percentage = 100

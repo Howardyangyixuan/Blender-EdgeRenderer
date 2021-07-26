@@ -63,7 +63,7 @@ bpy.context.scene.eevee.gtao_factor = 5
 bpy.context.scene.eevee.gtao_distance = 1
 bpy.context.scene.eevee.gtao_quality = 0.25
 
-render.image_settings.color_mode = 'RGBA' # ('RGB', 'RGBA', ...)
+render.image_settings.color_mode = 'RGB' # ('RGB', 'RGBA', ...)
 render.image_settings.color_depth = args.color_depth # ('8', '16')
 render.image_settings.file_format = args.format # ('PNG', 'OPEN_EXR', 'JPEG, ...)
 render.resolution_percentage = 100
@@ -187,9 +187,10 @@ output = edge_mat.node_tree.nodes.get('Material Output')
 print(edge_mat.node_tree.nodes.keys())   
 # edge_mat.node_tree.nodes["Holdout"].inputs[0].default_value = (1, 1, 1, 1)
 edge_mat.node_tree.links.new(output.inputs[0], edge_node.outputs[0])
-bpy.data.materials["edge"].node_tree.nodes["Background"].inputs[0].default_value = (0, 0, 0, 1)
+bpy.data.materials["edge"].node_tree.nodes["Background"].inputs[0].default_value = (1, 1, 1, 1)
 # # Make light just directional, disable shadows.
 bpy.context.scene.render.use_freestyle = True
+bpy.data.linestyles["LineStyle"].color = (1, 1, 1)
 light = bpy.data.lights['Light']
 light.type = 'SUN'
 light.use_shadow = False

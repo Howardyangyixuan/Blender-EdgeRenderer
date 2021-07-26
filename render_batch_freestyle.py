@@ -22,7 +22,8 @@ with open(obj_list_path) as f:
             # if cnt>2:
             #     break
             # command = 'blender --background --python render_blender_single_view.py -- --views 1 --output_folder '+ outfolder+" "+infile +' --resolution=1024'
-            command = 'blender --background --python render_blender_single_view_freestyle.py -- --views 1 --output_folder '+ outfolder+" "+infile +' --resolution=1024'
+            # command = 'blender --background --python render_blender_single_view_freestyle.py -- --views 1 --output_folder '+ outfolder+" "+infile +' --resolution=1024'
+            command = 'blender --background --python render_blender_single_view_freestyle.py -- --views 1 --output_folder '+ outfolder+" "+infile +' --resolution=256'
             print(command)
             os.system(command)
 
